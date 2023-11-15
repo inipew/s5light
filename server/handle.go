@@ -8,8 +8,13 @@ import (
 	"strings"
 	"time"
 
-	"github.com/hang666/s5light/server/s5"
+	"github.com/inipew/s5light/server/s5"
 	"github.com/txthinking/socks5"
+)
+
+const (
+    bufferSize = 1024 * 16
+    maxUDPPayloadSize = 65507
 )
 
 type DefaultHandle struct {
@@ -28,7 +33,7 @@ func (h *DefaultHandle) TCPHandle(s *socks5.Server, c *net.TCPConn, r *socks5.Re
 		}
 		defer rc.Close()
 		go func() {
-			var bf [1024 * 2]byte
+			var bf [bufferSize]byte
 			for {
 				if s.TCPTimeout != 0 {
 					if err := rc.SetDeadline(time.Now().Add(time.Duration(s.TCPTimeout) * time.Second)); err != nil {
@@ -44,7 +49,7 @@ func (h *DefaultHandle) TCPHandle(s *socks5.Server, c *net.TCPConn, r *socks5.Re
 				}
 			}
 		}()
-		var bf [1024 * 2]byte
+		var bf [bufferSize]byte
 		for {
 			if s.TCPTimeout != 0 {
 				if err := c.SetDeadline(time.Now().Add(time.Duration(s.TCPTimeout) * time.Second)); err != nil {
@@ -159,7 +164,7 @@ func (h *DefaultHandle) UDPHandle(s *socks5.Server, addr *net.UDPAddr, d *socks5
 			ue.RemoteConn.Close()
 			s.UDPExchanges.Delete(ue.ClientAddr.String() + dst)
 		}()
-		var b [65507]byte
+		var b [maxUDPPayloadSize]byte
 		for {
 			select {
 			case <-ch:

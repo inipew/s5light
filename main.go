@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	s5light "github.com/hang666/s5light/server"
+	s5light "github.com/inipew/s5light/server"
 	"github.com/urfave/cli/v2"
 )
 
@@ -14,7 +14,7 @@ func main() {
 	app := &cli.App{
 		Name:    "s5light",
 		Usage:   "A lightweight socks5 proxy server.",
-		Version: "v0.1.0",
+		Version: "v0.1.2",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:        "config",
