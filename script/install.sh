@@ -18,14 +18,14 @@ function install_s5light(){
     
     mkdir $BIN_DIR
     
-    wget https://github.com/inipew/s5light/releases/download/${VERSION}/s5light-linux-amd64-${VERSION}.gz -O $BIN_DIR/s5light.gz
+    wget https://github.com/hang666/s5light/releases/download/${VERSION}/s5light-linux-amd64-${VERSION}.gz -O $BIN_DIR/s5light.gz
     gunzip -c $BIN_DIR/s5light.gz > $BIN_DIR/s5light
     rm -rf $BIN_DIR/s5light.gz
     chmod +x $BIN_DIR/s5light
     
     echo -e "accounts:\n  - username: \"$f_name\"\n    password: \"$f_password\"\n    bind_address: \"$f_bindaddress\"" > $CONFIG_PATH
     
-    wget https://raw.githubusercontent.com/inipew/s5light/${VERSION}/config.yaml.example -O $CONFIG_PATH/config.yaml.example
+    wget https://raw.githubusercontent.com/hang666/s5light/${VERSION}/config.yaml.example -O $CONFIG_PATH/config.yaml.example
     
     wget https://raw.githubusercontent.com/inipew/s5light/main/script/s5light.service -O /etc/systemd/system/s5light.service
     chmod +x /etc/systemd/system/s5light.service
